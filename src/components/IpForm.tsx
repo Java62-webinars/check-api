@@ -10,7 +10,7 @@ const IpForm = () => {
         return <div>Error connect to IpProvider</div>;
     }
     const { lookup, loading, error } = ctx;
-
+//useDispatch
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (!ip.trim()) return;

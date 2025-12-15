@@ -9,7 +9,7 @@ const IpInfo = () => {
     }
 
     const { info, loading, error } = ctx;
-
+//useSelector
     if (loading) return <div>Loading IP info..</div>;
     if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
     if (!info) return <div>No data. Input IP.</div>;
