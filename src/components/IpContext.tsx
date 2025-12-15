@@ -1,6 +1,7 @@
-import type {IpInfoType} from "../types/IpInfo.ts";
+import type {IpInfoType} from "../types/IpInfoType.ts";
 import {createContext, useState} from "react";
 import {fetchIpInfo} from "../services/iPservice.ts";
+import * as React from "react";
 
 interface IpContextValue {
   info: IpInfoType | null;
@@ -14,7 +15,7 @@ interface IpContextValue {
 // eslint-disable-next-line react-refresh/only-export-components
 export const IpContext = createContext<IpContextValue|null>(null)
 
-export function IpProvider(props: {children: any}) {
+export function IpProvider(props: {children: React.ReactNode }) {
     const [info, setInfo] = useState<IpInfoType | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);

@@ -1,4 +1,4 @@
-import type {IpInfoType} from "../types/IpInfo.ts";
+import type {IpInfoType} from "../types/IpInfoType.ts";
 
 const API_BASE_URL= "https://ipapi.co";
 interface IpApiResponse {

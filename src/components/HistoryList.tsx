@@ -1,6 +1,7 @@
 
 
 const HistoryList = () => {
+    //TODO develop history with localStorage
     return (
         <div>
 
