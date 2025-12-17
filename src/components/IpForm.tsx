@@ -1,22 +1,29 @@
-import {type FormEvent, useContext, useState} from 'react';
-import {IpContext, } from "./IpContext.tsx";
+import {type FormEvent, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import type {RootState} from "../store/store.ts";
+import {ipFailure, ipRequest, ipSuccess} from "../actions/ipActions.ts";
+import {fetchIpInfo} from "../services/iPservice.ts";
 
 const IpForm = () => {
-    const ctx = useContext(IpContext);
-
+    const dispatch = useDispatch();
+    const {loading, error} = useSelector((state: RootState) => state);
     const [ip, setIp] = useState("");
-    // На случай, если кто-то забудет обернуть App в IpProvider
-    if (!ctx) {
-        return <div>Error connect to IpProvider</div>;
-    }
-    const { lookup, loading, error } = ctx;
-//useDispatch
-    const handleSubmit = async (e: FormEvent) => {
+
+    async function handleSubmit(e: FormEvent) {
         e.preventDefault();
-        if (!ip.trim()) return;
-        //TODO Validate IP
-        await lookup(ip.trim());
-    };
+        const trimmed = ip.trim();
+        if (!trimmed) return;
+
+        dispatch(ipRequest());
+        try {
+            const data = await fetchIpInfo(trimmed);
+            dispatch(ipSuccess(data));
+        } catch (e) {
+            const msg = e instanceof Error ? e.message : "Ошибка запроса";
+            dispatch(ipFailure(msg));
+        }
+    }
+
 
     return (
         <form onSubmit={handleSubmit} style={{ marginBottom: "1rem" }}>

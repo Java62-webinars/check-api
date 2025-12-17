@@ -1,14 +1,11 @@
-import  {useContext} from 'react';
-import {IpContext} from "./IpContext.tsx";
+import {useSelector} from "react-redux";
+import type {RootState} from "../store/store.ts";
 
 const IpInfo = () => {
-    const ctx = useContext(IpContext);
-
-    if (!ctx) {
-        return <div>Error connect to IpProvider.</div>;
-    }
-
-    const { info, loading, error } = ctx;
+    const {info, loading, error} = useSelector((state: RootState) => state);
+    if (loading) return <div>Загружаем данные об IP...</div>;
+    if (error) return <div style={{ color: "red" }}>Ошибка: {error}</div>;
+    if (!info) return <div>Пока нет данных. Введите IP и нажмите «Проверить».</div>;
 //useSelector
     if (loading) return <div>Loading IP info..</div>;
     if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
