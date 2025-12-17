@@ -1,6 +1,6 @@
 import {type FormEvent, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import type {RootState} from "../store/store.ts";
+import {type RootState} from "../store/store.ts";
 import {ipFailure, ipRequest, ipSuccess} from "../actions/ipActions.ts";
 import {fetchIpInfo} from "../services/iPservice.ts";
 
@@ -13,7 +13,7 @@ const IpForm = () => {
         e.preventDefault();
         const trimmed = ip.trim();
         if (!trimmed) return;
-
+        //if (store.getState().history.includes(trimmed)) return; //simple variant
         dispatch(ipRequest());
         try {
             const data = await fetchIpInfo(trimmed);
