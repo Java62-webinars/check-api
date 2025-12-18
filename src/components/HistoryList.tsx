@@ -10,8 +10,17 @@ export function HistoryList() {
         <div>
             <h2>История запросов</h2>
             <ul>
-                {history.map((ip, idx) => (
-                    <li key={`${ip}-${idx}`}>{ip}</li>
+                {history.map((info, idx) => (
+                    <li key={`${idx}`}>
+                        <h3>Информация об IP</h3>
+                        <ul>
+                            <li><strong>IP:</strong> {info.ip}</li>
+                            <li><strong>Город:</strong> {info.city}</li>
+                            <li><strong>Регион:</strong> {info.region}</li>
+                            <li><strong>Страна:</strong> {info.country}</li>
+                            <li><strong>Организация:</strong> {info.org}</li>
+                        </ul>
+                    </li>
                 ))}
             </ul>
         </div>

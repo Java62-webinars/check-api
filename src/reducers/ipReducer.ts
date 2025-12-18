@@ -5,7 +5,7 @@ export interface ipState {
     info: IpInfoType | null;
     loading: boolean;
     error: string | null;
-    history: string[];
+    history: IpInfoType [];
 };
 
 const initialState: ipState = {
@@ -39,13 +39,12 @@ export function ipReducer(
                 info: null,
             };
             case IP_SUCCESS: {
-                const ip = action.payload.ip;
                 return {
                     ...state,
                     loading: false,
                     error: null,
                     info: action.payload,
-                    history: [...state.history, ip],
+                    history: [...state.history, action.payload],
                 }
             }
         default:
