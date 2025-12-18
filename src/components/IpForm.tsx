@@ -1,32 +1,31 @@
 import {type FormEvent, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {type RootState} from "../store/store.ts";
-import {ipFailure, ipFromHistory, ipRequest, ipSuccess} from "../actions/ipActions.ts";
-import {fetchIpInfo} from "../services/iPservice.ts";
+
 
 const IpForm = () => {
     const dispatch = useDispatch();
-    const {loading, error, history} = useSelector((state: RootState) => state);
+    const {loading, error} = useSelector((state: RootState) => state);
     const [ip, setIp] = useState("");
 
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
-        const trimmed = ip.trim();
-        if (!trimmed) return;
-
-        const existing = history.find((item) => item.ip === ip);
-        if (existing) {
-            dispatch(ipFromHistory(existing));
-            return;
-        }
-        dispatch(ipRequest());
-        try {
-            const data = await fetchIpInfo(trimmed);
-            dispatch(ipSuccess(data));
-        } catch (e) {
-            const msg = e instanceof Error ? e.message : "Ошибка запроса";
-            dispatch(ipFailure(msg));
-        }
+        // const trimmed = ip.trim();
+        // if (!trimmed) return;
+        //
+        // const existing = history.find((item) => item.ip === ip);
+        // if (existing) {
+        //     dispatch(ipFromHistory(existing));
+        //     return;
+        // }
+        // dispatch(ipRequest());
+        // try {
+        //     const data = await fetchIpInfo(trimmed);
+        //     dispatch(ipSuccess(data));
+        // } catch (e) {
+        //     const msg = e instanceof Error ? e.message : "Ошибка запроса";
+        //     dispatch(ipFailure(msg));
+        // }
     }
 
 
