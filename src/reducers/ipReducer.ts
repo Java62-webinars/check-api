@@ -1,5 +1,5 @@
 import type {IpInfoType} from "../types/IpInfoType.ts";
-import {IP_FAILURE, IP_REQUEST, IP_SUCCESS} from "../actions/ipActions.ts";
+import {IP_FAILURE, IP_FROM_HISTORY, IP_REQUEST, IP_SUCCESS} from "../actions/ipActions.ts";
 
 export interface ipState {
     info: IpInfoType | null;
@@ -17,7 +17,8 @@ const initialState: ipState = {
 
 type IpAction = { type: typeof IP_REQUEST }
     | { type: typeof IP_SUCCESS; payload: IpInfoType }
-    | { type: typeof IP_FAILURE; payload: string };
+    | { type: typeof IP_FAILURE; payload: string }
+    |{ type: typeof IP_FROM_HISTORY; payload: IpInfoType };
 
 export function ipReducer(
     state = initialState,
@@ -45,6 +46,15 @@ export function ipReducer(
                     error: null,
                     info: action.payload,
                     history: [...state.history, action.payload],
+                }
+            }
+            case IP_FROM_HISTORY: {
+                return {
+                    ...state,
+                    loading: false,
+                    error: null,
+                    info: action.payload,
+                    history: [...state.history],
                 }
             }
         default:

@@ -1,12 +1,12 @@
 import {type FormEvent, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {type RootState, store} from "../store/store.ts";
-import {ipFailure, ipRequest, ipSuccess} from "../actions/ipActions.ts";
+import {type RootState} from "../store/store.ts";
+import {ipFailure, ipFromHistory, ipRequest, ipSuccess} from "../actions/ipActions.ts";
 import {fetchIpInfo} from "../services/iPservice.ts";
 
 const IpForm = () => {
     const dispatch = useDispatch();
-    const {loading, error} = useSelector((state: RootState) => state);
+    const {loading, error, history} = useSelector((state: RootState) => state);
     const [ip, setIp] = useState("");
 
     async function handleSubmit(e: FormEvent) {
@@ -14,8 +14,11 @@ const IpForm = () => {
         const trimmed = ip.trim();
         if (!trimmed) return;
 
-        const existing = store. getState().history.find((item) => item.ip === ip);
-        if (existing) return;
+        const existing = history.find((item) => item.ip === ip);
+        if (existing) {
+            dispatch(ipFromHistory(existing));
+            return;
+        }
         dispatch(ipRequest());
         try {
             const data = await fetchIpInfo(trimmed);
